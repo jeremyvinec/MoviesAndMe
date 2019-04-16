@@ -7,6 +7,7 @@ import Search from '../Components/Search'
 import FilmDetail from '../Components/FilmDetail'
 import Favorites from '../Components/Favorites'
 import News from '../Components/News'
+import Vus from '../Components/Vus'
 
 const SearchStackNavigator = createStackNavigator({
   Search: {
@@ -44,6 +45,18 @@ const NewsStackNavigator = createStackNavigator({
   }
 })
 
+const VusStackNavigator = createStackNavigator({
+  Vus: {
+    screen: Vus,
+    navigationOptions: {
+      title: 'Mes Film Vus'
+    }
+  },
+  FilmDetail: {
+    screen: FilmDetail
+  }
+})
+
 const MoviesTabNavigator = createBottomTabNavigator(
   {
     Search: {
@@ -72,6 +85,16 @@ const MoviesTabNavigator = createBottomTabNavigator(
         tabBarIcon: () => {
           return <Image
             source={require('../Images/ic_fiber_new.png')}
+            style={styles.icon}/>
+        }
+      }
+    },
+    Vus: {
+      screen: VusStackNavigator,
+      navigationOptions: {
+        tabBarIcon: () => {
+          return <Image
+            source={require('../Images/ic_vus.png')}
             style={styles.icon}/>
         }
       }
