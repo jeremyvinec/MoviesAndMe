@@ -29,7 +29,8 @@ class FilmDetail extends React.Component {
     super(props)
     this.state = {
       film: undefined,
-      isLoading: false
+      isLoading: false,
+      title: 'Marquer comme vu'
     }
 
     this._toggleFavorite = this._toggleFavorite.bind(this)
@@ -60,6 +61,12 @@ class FilmDetail extends React.Component {
     })
   }
 
+  componentDidUpdate() {
+    console.log("componentDidUpdate : ")
+    console.log(this.props.filmViews)
+    console.log(this.props.favoritesFilm)
+  }
+
   _displayLoading() {
     if (this.state.isLoading) {
       return (
@@ -74,6 +81,17 @@ class FilmDetail extends React.Component {
     const action = { type: "TOGGLE_FAVORITE", value: this.state.film }
     this.props.dispatch(action)
   }
+
+  _toggleView() {
+    // definition de l'action
+    const action = { type: 'TOGGLE_VIEW', value: this.state.film}
+    if (this.props.filmViews.findIndex(item => item.id === this.state.film.id) !== -1){
+      this.setState({ title: 'Non vu' })
+    }else{
+      this.setState({ title: 'Marquer comme vu' })
+    }
+    this.props.dispatch(action)
+}
 
   _displayFavoriteImage() {
     var sourceImage = require('../Images/ic_favorite_border.png')
@@ -121,6 +139,7 @@ class FilmDetail extends React.Component {
               return company.name;
             }).join(" / ")}
           </Text>
+          <Button title={this.state.title} onPress={ () => this._toggleView()} />
         </ScrollView>
       )
     }
@@ -146,12 +165,27 @@ class FilmDetail extends React.Component {
     }
   }
 
+  _displayView() {
+    const { film } = this.state
+    if(film != undefined){
+      return(
+        <TouchableOpacity
+          onPress={ () => this._toggleView()}>
+          <Image
+            style={styles.share_image}
+            source={require('../Images/ic_share.png')} />
+        </TouchableOpacity>
+      )
+    }
+  }
+
   render() {
     return (
       <View style={styles.main_container}>
         {this._displayLoading()}
         {this._displayFilm()}
         {this._displayFloatingActionButton()}
+        {this._displayView()}
       </View>
     )
   }
@@ -230,7 +264,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    favoritesFilm: state.toggleFavorite.favoritesFilm
+    favoritesFilm: state.toggleFavorite.favoritesFilm,
+    filmViews: state.toggleView.filmViews
   }
 }
 

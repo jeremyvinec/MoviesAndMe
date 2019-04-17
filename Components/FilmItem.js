@@ -1,7 +1,7 @@
 // Components/FilmItem.js
 
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, Button } from 'react-native'
 import { getImageFromApi } from '../API/TMDBApi'
 import FadeIn from '../Animations/FadeIn'
 
@@ -16,6 +16,17 @@ class FilmItem extends React.Component {
           source={require('../Images/ic_favorite.png')}
         />
       )
+    }
+  }
+
+  // si 
+  _displayFilmView(){
+    if(this.props.isFilmView){
+      return(
+        <Button title='Marquer comme vu' onPress={() => this._searchFilms()}/>
+      )
+    } else {
+      <Button title='Non vu' onPress={() => this._searchFilms()}/>
     }
   }
 
@@ -42,6 +53,9 @@ class FilmItem extends React.Component {
             <View style={styles.date_container}>
               <Text style={styles.date_text}>Sorti le 13/12/2017</Text>
             </View>
+          </View>
+          <View>
+            {this._displayFilmView()}
           </View>
         </TouchableOpacity>
       </FadeIn>
