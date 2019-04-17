@@ -50,7 +50,7 @@ const ViewsStackNavigator = createStackNavigator({
     screen: Views,
     navigationOptions: {
       title: 'Mes Films vus'
-    }
+    },
   },
   FilmDetail: {
     screen: FilmDetail

@@ -19,17 +19,6 @@ class FilmItem extends React.Component {
     }
   }
 
-  // si 
-  _displayFilmView(){
-    if(this.props.isFilmView){
-      return(
-        <Button title='Marquer comme vu' onPress={() => this._searchFilms()}/>
-      )
-    } else {
-      <Button title='Non vu' onPress={() => this._searchFilms()}/>
-    }
-  }
-
   render() {
     const { film, displayDetailForFilm } = this.props
     return (
@@ -53,9 +42,6 @@ class FilmItem extends React.Component {
             <View style={styles.date_container}>
               <Text style={styles.date_text}>Sorti le 13/12/2017</Text>
             </View>
-          </View>
-          <View>
-            {this._displayFilmView()}
           </View>
         </TouchableOpacity>
       </FadeIn>

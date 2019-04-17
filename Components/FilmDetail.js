@@ -59,12 +59,26 @@ class FilmDetail extends React.Component {
         isLoading: false
       }, () => { this._updateNavigationParams() })
     })
+
+    const filmViewIndex = this.props.filmViews.findIndex(item => item.id === this.props.navigation.state.params.idFilm)
+    if(filmViewIndex !== -1){
+      this.setState({
+        film : this.props.filmViews[filmViewIndex]
+      }, () => { this._updateNavigationParams() })
+      return
+    }
+    this.setState({ isLoading: true})
+    getFilmDetailFromApi(this.props.navigation.state.params.idFilm).then(data => {
+      this.setState({
+        film: data,
+        isLoading: false
+      }, () => { this._updateNavigationParams() })
+    })
   }
 
   componentDidUpdate() {
     console.log("componentDidUpdate : ")
     console.log(this.props.filmViews)
-    console.log(this.props.favoritesFilm)
   }
 
   _displayLoading() {
@@ -139,7 +153,7 @@ class FilmDetail extends React.Component {
               return company.name;
             }).join(" / ")}
           </Text>
-          <Button title={this.state.title} onPress={ () => this._toggleView()} />
+          <Button style={styles.buttonView} title={this.state.title} onPress={ () => this._toggleView()} />
         </ScrollView>
       )
     }
@@ -259,6 +273,9 @@ const styles = StyleSheet.create({
   share_image: {
     width: 30,
     height: 30
+  },
+  buttonView: {
+    marginTop: 10
   }
 })
 

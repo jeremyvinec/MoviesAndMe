@@ -19,7 +19,6 @@ function toggleView(state = initialState, action){
         return nextState || state
         default: 
             return state
-        
     }
 }
 

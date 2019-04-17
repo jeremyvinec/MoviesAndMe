@@ -80,6 +80,7 @@ class Search extends React.Component {
           page={this.page}
           totalPages={this.totalPages}
           favoriteList={false} // Ici j'ai simplement ajouté un booléen à false pour indiquer qu'on n'est pas dans le cas de l'affichage de la liste des films favoris. Et ainsi pouvoir déclencher le chargement de plus de films lorsque l'utilisateur scrolle.
+          viewList={false}
         />
         {this._displayLoading()}
       </View>
