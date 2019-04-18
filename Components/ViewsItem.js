@@ -10,33 +10,32 @@ class ViewsItem extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            film: undefined,
-            text : this.props.film.title
+            film: this.props,
+            title : '',
         }
     }
 
-    componentDidMount(){
-        getFilmDetailFromApi
-    }
-
     _onLongPressButton() {
-        this.setState({ text: 'Sorti le '+ moment(new Date(this.film.release_date)).format('DD/MM/YYYY') })
+      getFilmDetailFromApi(this.film.release_date).then(data => {
+        console.log({ title : film.release_date })
+      })
     }
 
   render() {
-    const { film, displayDetailForFilm } = this.props
+    const { film } = this.props
+    getFilmDetailFromApi(this.props.film.release_date).then(data => {
+      console.log({ title : film.release_date })
+  })
     return (
       <FadeIn>
-        <TouchableOpacity
-          style={styles.main_container}
-          onPress={() => displayDetailForFilm(film.id)}>
+        <TouchableOpacity style={styles.main_container}>
           <Image
             style={styles.image}
             source={{uri: getImageFromApi(film.poster_path)}}
           />
           <View style={styles.content_container}>
             <TouchableHighlight onLongPress={this._onLongPressButton}>
-                <Text style={styles.title_text}>{this.state.text}</Text>
+                <Text style={styles.title_text}>{film.title}</Text>
             </TouchableHighlight>
           </View>
         </TouchableOpacity>
