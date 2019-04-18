@@ -1,13 +1,13 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import FilmList from './FilmList'
+import ViewList from './ViewsList'
 import { connect } from 'react-redux'
 
 class Views extends React.Component {
     render(){
         return(
             <View style={styles.main_container}>
-                <FilmList
+                <ViewList
                 films={this.props.filmViews}
                 navigation={this.props.navigation}
                 viewList={true}

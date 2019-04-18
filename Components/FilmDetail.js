@@ -179,27 +179,12 @@ class FilmDetail extends React.Component {
     }
   }
 
-  _displayView() {
-    const { film } = this.state
-    if(film != undefined){
-      return(
-        <TouchableOpacity
-          onPress={ () => this._toggleView()}>
-          <Image
-            style={styles.share_image}
-            source={require('../Images/ic_share.png')} />
-        </TouchableOpacity>
-      )
-    }
-  }
-
   render() {
     return (
       <View style={styles.main_container}>
         {this._displayLoading()}
         {this._displayFilm()}
         {this._displayFloatingActionButton()}
-        {this._displayView()}
       </View>
     )
   }

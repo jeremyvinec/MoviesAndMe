@@ -24,13 +24,12 @@ class FilmList extends React.Component {
         <FlatList
           style={styles.list}
           data={this.props.films}
-          extraData={this.props.favoritesFilm && this.props.filmView}
+          extraData={this.props.favoritesFilm}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({item}) => (
             <FilmItem
               film={item}
               isFilmFavorite={(this.props.favoritesFilm.findIndex(film => film.id === item.id) !== -1) ? true : false} // Bonus pour différencier les films déjà présent dans notre state global et qui n'ont donc pas besoin d'être récupérés depuis l'API
-              isFilmView={(this.props.filmViews.findIndex(film => film.id === item.id) !== -1) ? true : false}
               displayDetailForFilm={this._displayDetailForFilm}
             />
           )}
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     favoritesFilm: state.toggleFavorite.favoritesFilm,
-    filmViews: state.toggleView.filmViews
   }
 }
 
