@@ -8,7 +8,7 @@ class Views extends React.Component {
         return(
             <View style={styles.main_container}>
                 <FilmList
-                films={this.props.filmViews && this.props.favoritesFilm}
+                films={this.props.filmViews}
                 navigation={this.props.navigation}
                 viewList={true}
                 />

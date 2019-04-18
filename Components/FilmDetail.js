@@ -100,9 +100,9 @@ class FilmDetail extends React.Component {
     // definition de l'action
     const action = { type: 'TOGGLE_VIEW', value: this.state.film}
     if (this.props.filmViews.findIndex(item => item.id === this.state.film.id) !== -1){
-      this.setState({ title: 'Non vu' })
-    }else{
       this.setState({ title: 'Marquer comme vu' })
+    }else{
+      this.setState({ title: 'Non vu' })
     }
     this.props.dispatch(action)
 }

@@ -19,6 +19,8 @@ class FilmItem extends React.Component {
     }
   }
 
+  _display
+
   render() {
     const { film, displayDetailForFilm } = this.props
     return (

@@ -30,7 +30,7 @@ class FilmList extends React.Component {
             <FilmItem
               film={item}
               isFilmFavorite={(this.props.favoritesFilm.findIndex(film => film.id === item.id) !== -1) ? true : false} // Bonus pour différencier les films déjà présent dans notre state global et qui n'ont donc pas besoin d'être récupérés depuis l'API
-              //isFilmView={(this.props.filmViews.findIndex(film => film.id === item.id) !== -1) ? true : false}
+              isFilmView={(this.props.filmViews.findIndex(film => film.id === item.id) !== -1) ? true : false}
               displayDetailForFilm={this._displayDetailForFilm}
             />
           )}
