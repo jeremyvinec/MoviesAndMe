@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import EnlargeShrink from '../Animations/EnlargeShrink'
 
 class FilmDetail extends React.Component {
-
+  
   static navigationOptions = ({ navigation }) => {
       const { params } = navigation.state
       if (params.film != undefined && Platform.OS === 'ios') {
@@ -30,10 +30,11 @@ class FilmDetail extends React.Component {
     this.state = {
       film: undefined,
       isLoading: false,
-      title: 'Marquer comme vu'
+      title:  true
     }
 
     this._toggleFavorite = this._toggleFavorite.bind(this)
+    this._toggleView = this._toggleView.bind(this)
     this._shareFilm = this._shareFilm.bind(this)
   }
 
@@ -52,14 +53,6 @@ class FilmDetail extends React.Component {
       }, () => { this._updateNavigationParams() })
       return
     }
-    this.setState({ isLoading: true })
-    getFilmDetailFromApi(this.props.navigation.state.params.idFilm).then(data => {
-      this.setState({
-        film: data,
-        isLoading: false
-      }, () => { this._updateNavigationParams() })
-    })
-
     const filmViewIndex = this.props.filmViews.findIndex(item => item.id === this.props.navigation.state.params.idFilm)
     if(filmViewIndex !== -1){
       this.setState({
@@ -67,18 +60,13 @@ class FilmDetail extends React.Component {
       }, () => { this._updateNavigationParams() })
       return
     }
-    this.setState({ isLoading: true})
+    this.setState({ isLoading: true })
     getFilmDetailFromApi(this.props.navigation.state.params.idFilm).then(data => {
       this.setState({
         film: data,
         isLoading: false
       }, () => { this._updateNavigationParams() })
     })
-  }
-
-  componentDidUpdate() {
-    console.log("componentDidUpdate : ")
-    console.log(this.props.filmViews)
   }
 
   _displayLoading() {
@@ -97,15 +85,11 @@ class FilmDetail extends React.Component {
   }
 
   _toggleView() {
-    // definition de l'action
     const action = { type: 'TOGGLE_VIEW', value: this.state.film}
-    if (this.props.filmViews.findIndex(item => item.id === this.state.film.id) !== -1){
-      this.setState({ title: 'Marquer comme vu' })
-    }else{
-      this.setState({ title: 'Non vu' })
-    }
     this.props.dispatch(action)
-}
+    // Texte bouton
+    this.setState(prevState => ({ title: !prevState.title }))
+  }
 
   _displayFavoriteImage() {
     var sourceImage = require('../Images/ic_favorite_border.png')
@@ -153,7 +137,7 @@ class FilmDetail extends React.Component {
               return company.name;
             }).join(" / ")}
           </Text>
-          <Button style={styles.buttonView} title={this.state.title} onPress={ () => this._toggleView()} />
+          <Button style={styles.buttonView} title={this.state.title ? 'Marquer comme vu' : 'Non vu'} onPress={this._toggleView} />
         </ScrollView>
       )
     }

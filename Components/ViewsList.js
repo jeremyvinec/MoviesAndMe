@@ -32,7 +32,7 @@ class ViewsList extends React.Component {
                 )}
                 onEndReachedThreshold={0.5}
                 onEndReached={() => {
-                    if (!this.props.filmViews && this.props.page < this.props.totalPages) {
+                    if (!this.props.ViewList && this.props.page < this.props.totalPages) {
                     this.props.loadFilms()
                     }
                 }}

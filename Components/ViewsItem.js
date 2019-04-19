@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity, Button, TouchableHighlight } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, TouchableHighlight } from 'react-native'
 import { getFilmDetailFromApi, getImageFromApi } from '../API/TMDBApi'
 import moment from 'moment'
 import FadeIn from '../Animations/FadeIn'
@@ -10,39 +10,39 @@ class ViewsItem extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            film: this.props,
-            title : '',
+            film: undefined,
+            text : this.props.film.title,
         }
     }
 
-    _onLongPressButton() {
-      getFilmDetailFromApi(this.film.release_date).then(data => {
-        console.log({ title : film.release_date })
+    _onLongPressButton = () => {
+      const { film } = this.props
+      getFilmDetailFromApi(film.release_date).then(film => {
+        this.setState({ text : 'Sortie le ' + moment(new Date(film.release_date)).format('DD/MM/YYYY') })
       })
     }
 
   render() {
-    const { film } = this.props
-    getFilmDetailFromApi(this.props.film.release_date).then(data => {
-      console.log({ title : film.release_date })
-  })
+    const { film, displayDetailForFilm } = this.props
     return (
       <FadeIn>
-        <TouchableOpacity style={styles.main_container}>
+        <TouchableOpacity style={styles.main_container} onPress={() => displayDetailForFilm(film.id)}>
           <Image
             style={styles.image}
             source={{uri: getImageFromApi(film.poster_path)}}
           />
-          <View style={styles.content_container}>
-            <TouchableHighlight onLongPress={this._onLongPressButton}>
-                <Text style={styles.title_text}>{film.title}</Text>
-            </TouchableHighlight>
-          </View>
+          <TouchableHighlight underlayColor="white" onPress={() => displayDetailForFilm(film.id)} onLongPress={this._onLongPressButton}>
+            <View style={styles.content_container}> 
+                  <Text style={styles.title_text}>{this.state.text}</Text>
+            </View>
+          </TouchableHighlight>
         </TouchableOpacity>
       </FadeIn>
     )
   }
 }
+
+
 
 const styles = StyleSheet.create({
   main_container: {
@@ -57,11 +57,12 @@ const styles = StyleSheet.create({
   },
   content_container: {
     flex: 1,
-    margin: 20
+    margin: 15,
   },
   title_text: {
     fontSize: 15,
-    color: '#666666'
+    color: '#666666',
+    marginTop: 15
   },
   date_text: {
     fontSize: 14
